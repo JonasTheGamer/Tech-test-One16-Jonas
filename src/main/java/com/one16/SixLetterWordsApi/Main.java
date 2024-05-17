@@ -1,4 +1,4 @@
-package org.example;
+package com.one16.SixLetterWordsApi;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

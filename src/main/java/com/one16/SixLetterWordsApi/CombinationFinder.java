@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 
 public class CombinationFinder {
-    public static List<String> findWordMatches(HashSet<String> wordsSet, int wordLength) {
+    // TODO: Keep maxWordCombinationLength into account
+    // TODO: Remove strange comments
+    public static List<String> findWordMatches(HashSet<String> wordsSet, int wordLength, int maxWordCombinationLength) {
         List<String> matches = new ArrayList<>();
 
         // Get the words that we obtain by combining multiple words
@@ -23,7 +25,22 @@ public class CombinationFinder {
             words.stream().filter(word -> word.startsWith(wordPart)).forEach(word -> {
                 // Example: foo+bar=foobar
                 String partTwo = word.substring(wordPart.length());
-                matches.add(String.format("%s+%s=%s", wordPart, partTwo, word));
+
+                // Check if the second part of the word is in the wordParts set
+                if (wordParts.contains(partTwo)) {
+                    matches.add(String.format("%s+%s=%s", wordPart, partTwo, word));
+                } else {
+
+                    for(String wordPart2: wordParts) {
+                        String partOneAndTwo = wordPart + wordPart2;
+                        words.stream().filter(word2 -> word2.startsWith(partOneAndTwo)).forEach(word2 -> {
+                            String partThree = word2.substring(partOneAndTwo.length());
+                            if(wordParts.contains(partThree)) {
+                                matches.add(String.format("%s+%s+%s=%s", wordPart, wordPart2, partThree, word));
+                            }
+                        });
+                    }
+                }
             });
         }
 

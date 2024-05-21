@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         HashSet<String> wordsSet;
-        String filePath = "src/main/resources/input2.txt";
+        String filePath = Config.inputFilePath;
 
         // Read the file
         try {
@@ -24,7 +24,7 @@ public class Main {
         }
 
         // Get the matches
-        List<String> matches = CombinationFinder.findWordMatches(wordsSet, 6, 3);
+        List<String> matches = CombinationFinder.findWordMatches(wordsSet, Config.wordLength, Config.maxWordCombinationLength);
 
         // Print them to the console
         matches.forEach(System.out::println);

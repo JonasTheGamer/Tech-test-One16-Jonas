@@ -5,45 +5,54 @@ import java.util.HashSet;
 import java.util.List;
 
 public class CombinationFinder {
-    // TODO: Keep maxWordCombinationLength into account
-    // TODO: Remove strange comments
+
     public static List<String> findWordMatches(HashSet<String> wordsSet, int wordLength, int maxWordCombinationLength) {
         List<String> matches = new ArrayList<>();
-
-        // Get the words that we obtain by combining multiple words
         List<String> words = wordsSet.stream().filter(word -> word.length() == wordLength).toList();
-
-        // Get the parts of words that we can combine to form a word
         List<String> wordPartsList = wordsSet.stream().filter(word -> word.length() < wordLength).toList();
-
-        // Convert the list of word parts to a HashSet for faster lookups
         HashSet<String> wordParts = new HashSet<>(wordPartsList);
 
         for (String wordPart : wordParts) {
-            // Example: foo
-            // Loop through all words to see which ones start with foo
-            words.stream().filter(word -> word.startsWith(wordPart)).forEach(word -> {
-                // Example: foo+bar=foobar
-                String partTwo = word.substring(wordPart.length());
-
-                // Check if the second part of the word is in the wordParts set
-                if (wordParts.contains(partTwo)) {
-                    matches.add(String.format("%s+%s=%s", wordPart, partTwo, word));
-                } else {
-
-                    for(String wordPart2: wordParts) {
-                        String partOneAndTwo = wordPart + wordPart2;
-                        words.stream().filter(word2 -> word2.startsWith(partOneAndTwo)).forEach(word2 -> {
-                            String partThree = word2.substring(partOneAndTwo.length());
-                            if(wordParts.contains(partThree)) {
-                                matches.add(String.format("%s+%s+%s=%s", wordPart, wordPart2, partThree, word));
-                            }
-                        });
-                    }
-                }
-            });
+            findMatchesRecursive(wordPart, words, wordParts, new ArrayList<>(), matches, maxWordCombinationLength, wordLength);
         }
 
         return matches;
+    }
+
+    private static void findMatchesRecursive(String currentPart, List<String> words, HashSet<String> wordParts, List<String> currentCombination, List<String> matches, int maxWordCombinationLength, int targetLength) {
+        currentCombination.add(currentPart);
+
+        // Make sure that the loop no longer runs when the combination would be too long
+        if(currentCombination.size() == maxWordCombinationLength) {
+            return;
+        }
+
+        // Loop through the words to see if any of them match the currentPart
+        for (String word : words) {
+            if (word.startsWith(currentPart)) {
+                String remainingPart = word.substring(currentPart.length());
+
+                // If the currentPart is the word itself, match!
+                if (remainingPart.isEmpty() && currentPart.length() == targetLength) {
+                    matches.add(String.join("+", currentCombination) + "=" + word);
+                }
+                // If the remaining part itself is in the wordParts, match!
+                // For example: currentPart is foo & remainingPart is bar, and foobar is in the wordParts
+                else if (wordParts.contains(remainingPart)) {
+                    List<String> newCombination = new ArrayList<>(currentCombination);
+                    newCombination.add(remainingPart);
+                    matches.add(String.join("+", newCombination) + "=" + word);
+                }
+                // Otherwise, continue the search
+                else {
+                    for (String nextPart : wordParts) {
+                        String newPart = currentPart + nextPart;
+                        findMatchesRecursive(newPart, words, wordParts, new ArrayList<>(currentCombination), matches, maxWordCombinationLength, targetLength);
+                    }
+                }
+            }
+        }
+
+        currentCombination.remove(currentCombination.size() - 1);
     }
 }

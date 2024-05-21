@@ -29,8 +29,9 @@ public class CombinationFinder {
 
         // Loop through the words to see if any of them match the currentPart
         for (String word : words) {
-            if (word.startsWith(currentPart)) {
-                String remainingPart = word.substring(currentPart.length());
+            String newBeginning = String.join("", currentCombination);
+            if (word.startsWith(newBeginning)) {
+                String remainingPart = word.substring(newBeginning.length());
 
                 // If the currentPart is the word itself, match!
                 if (remainingPart.isEmpty() && currentPart.length() == targetLength) {
@@ -46,8 +47,7 @@ public class CombinationFinder {
                 // Otherwise, continue the search
                 else {
                     for (String nextPart : wordParts) {
-                        String newPart = currentPart + nextPart;
-                        findMatchesRecursive(newPart, words, wordParts, new ArrayList<>(currentCombination), matches, maxWordCombinationLength, targetLength);
+                        findMatchesRecursive(nextPart, words, wordParts, new ArrayList<>(currentCombination), matches, maxWordCombinationLength, targetLength);
                     }
                 }
             }

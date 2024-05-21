@@ -4,7 +4,7 @@ package com.one16.SixLetterWordsApi;
 public class Config {
 
     // The path to the input file containing both the words and the parts to form words
-    public static String inputFilePath = "src/main/resources/input.txt";
+    public static String inputFilePath = "src/main/resources/input2.txt";
 
     // The length of the words to form
     public static int wordLength = 6;

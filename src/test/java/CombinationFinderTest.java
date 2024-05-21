@@ -1,4 +1,4 @@
-import com.one16.SixLetterWordsApi.CombinationFinder;
+import be.one16.SixLetterWordsApi.CombinationFinder;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;

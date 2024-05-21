@@ -1,4 +1,4 @@
-package com.one16.SixLetterWordsApi;
+package be.one16.SixLetterWordsApi;
 
 import java.util.ArrayList;
 import java.util.HashSet;

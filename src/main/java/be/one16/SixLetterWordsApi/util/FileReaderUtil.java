@@ -1,4 +1,4 @@
-package com.one16.SixLetterWordsApi.util;
+package be.one16.SixLetterWordsApi.util;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

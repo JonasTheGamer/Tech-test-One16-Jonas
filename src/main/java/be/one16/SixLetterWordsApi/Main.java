@@ -1,15 +1,14 @@
-package com.one16.SixLetterWordsApi;
+package be.one16.SixLetterWordsApi;
 
-import com.one16.SixLetterWordsApi.util.FileReaderUtil;
+import be.one16.SixLetterWordsApi.util.FileReaderUtil;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
-    // TODO: Add input file as application parameter
-    // TODO: Add maxWordCombinationLength as application parameter
-    // TODO: Add wordLength as application parameter
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         HashSet<String> wordsSet;
@@ -28,5 +27,10 @@ public class Main {
 
         // Print them to the console
         matches.forEach(System.out::println);
+
+        // Wait for user input before closing the application
+        System.out.println("Press Enter to exit...");
+        scanner.nextLine();
+        scanner.close();
     }
 }

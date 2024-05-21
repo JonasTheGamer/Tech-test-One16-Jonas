@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    application
 }
 
 group = "org.example"
@@ -16,4 +17,15 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.jar {
+    manifest {
+        attributes(
+                "Main-Class" to "be.one16.SixLetterWordsApi.Main"
+        )
+    }
+    from({
+        configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
+    })
 }

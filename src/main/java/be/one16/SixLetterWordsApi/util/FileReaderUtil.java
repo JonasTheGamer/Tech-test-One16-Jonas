@@ -1,7 +1,6 @@
 package be.one16.SixLetterWordsApi.util;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
 

@@ -1,7 +1,7 @@
 package be.one16.SixLetterWordsApi;
 
 // Use this class to configure the application
-public class Config {
+public class DefaultConfig {
 
     // The path to the input file containing both the words and the parts to form words
     public static String inputFilePath = "src/main/resources/input.txt";
